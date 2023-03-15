@@ -11,6 +11,16 @@ docker-compose up -d
 deck sync --headers "Kong-Admin-Token:password"
 ```
 
+### GitOps with decK
+
+```bash
+# Dump kong config
+deck dump --headers "Kong-Admin-Token:password"
+```
+
+- GitHub workflow brings up the kong environment with docker-compose.
+- Run decK sync against the docker compose environment brought up earlier (Ideally, it would point to the actual kong instance's Admin API)
+
 ## Kong on Kubernetes
 
 > Read the detailed README at [kubernetes/README.md](kubernetes/README.md)
@@ -25,5 +35,6 @@ helm repo update
 helm install kong kong/kong -n kong --create-namespace
 
 # Install Kong components, k8s services, ingress
+# Replace the host with the loadbalancer IP of kong-proxy
 kubectl apply -f kubernetes/
 ```

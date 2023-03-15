@@ -49,16 +49,17 @@ kubectl apply -f user2-rate-limiting.yaml
 kubectl apply -f echo-service.yaml
 ```
 
-### Create ingress
-
-```bash
-kubectl apply -f kong-ingress.yaml
-```
-
 ### Get ingress domain
 
 ```bash
 export PROXY_IP=$(kubectl get -o jsonpath="{.status.loadBalancer.ingress[0].hostname}" service -n kong kong-kong-proxy)
+```
+
+### Create ingress
+
+```bash
+# Replace the host with the loadbalancer IP of kong-proxy
+kubectl apply -f kong-ingress.yaml
 ```
 
 ### Verify rate limting per consumer
