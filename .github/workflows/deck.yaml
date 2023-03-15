@@ -12,6 +12,12 @@ jobs:
           deck-version: 1.15.1
       - name: Start kong on docker-compose
         run: docker-compose -f "docker-compose/docker-compose.yaml" up -d
+      - name: Sleep for 30 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '60s'
+      - name: Check container
+        run: docker ps
       - name: Run deck validate
         env:
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
