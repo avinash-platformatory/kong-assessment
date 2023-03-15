@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: key-auth-assessment
+plugin: key-auth
+config: 
+  key_names:
+  - apikey
+  # key_in_query: false
+  hide_credentials: true

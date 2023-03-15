@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: echo
+  annotations:
+    konghq.com/plugins: key-auth-assessment, user1-rate-limiting, user2-rate-limiting
+spec:
+  ingressClassName: kong
+  rules:
+    - host: a347cd86b5b194546bb60b530222eef0-982102527.ap-south-1.elb.amazonaws.com
+      http:
+        paths:
+          - path: /echo
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: echo
+                port:
+                  number: 80

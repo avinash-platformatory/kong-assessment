@@ -1,0 +1,10 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: user1
+  annotations:
+    konghq.com/plugins: user1-rate-limiting
+    kubernetes.io/ingress.class: kong
+username: user1
+credentials:
+  - user1-api-key

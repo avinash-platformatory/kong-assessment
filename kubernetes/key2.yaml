@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: user2-api-key
+type: Opaque
+data:
+  kongCredType: a2V5LWF1dGg=
+  key: a2V5Mg==
