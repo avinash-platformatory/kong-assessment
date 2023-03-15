@@ -1,0 +1,35 @@
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deck-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: kong/setup-deck@v1
+        with:
+          deck-version: 1.15.1
+      - name: Start kong on docker-compose
+        run: docker-compose -f "docker-compose/docker-compose.yaml" up -d
+      - name: Run deck validate
+        env:
+          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
+        run: |
+          deck validate \
+           --headers apikey:$ADMIN_API_KEY
+      - name: Run deck diff
+        env:
+          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
+        run: |
+          deck diff \
+           --headers apikey:$ADMIN_API_KEY
+      # Have an approval gate before sync. Available in enterprise editions
+      - name: Run deck sync
+        env:
+          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
+        run: |
+          deck sync \
+           --headers apikey:$ADMIN_API_KEY
+      - name: Validate kong
+        run: curl localhost:8000/echo -H "apikey:key1"
