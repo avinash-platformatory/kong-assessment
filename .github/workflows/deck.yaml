@@ -17,19 +17,22 @@ jobs:
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
         run: |
           deck validate \
-           --headers apikey:$ADMIN_API_KEY
+          --headers apikey:$ADMIN_API_KEY \
+          --state docker-compose/kong.yaml
       - name: Run deck diff
         env:
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
         run: |
           deck diff \
-           --headers apikey:$ADMIN_API_KEY
+          --headers apikey:$ADMIN_API_KEY \
+          --state docker-compose/kong.yaml
       # Have an approval gate before sync. Available in enterprise editions
       - name: Run deck sync
         env:
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
         run: |
           deck sync \
-           --headers apikey:$ADMIN_API_KEY
+          --headers apikey:$ADMIN_API_KEY \
+          --state docker-compose/kong.yaml
       - name: Validate kong
         run: curl localhost:8000/echo -H "apikey:key1"
